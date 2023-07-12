@@ -1,20 +1,62 @@
-name: Python
+name: Python Version Test
 
-on: workflow_dispatch
+on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.8"]
-
+    
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Display Python version
-        run: python -c "import sys; print(sys.version)"
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+    
+    - name: Check Python version
+      run: python --version
+      id: python38
+    
+    - name: Save output
+      run: echo "${{ steps.python38.outputs.stdout }}" > python38_output.txt
+      
+    - name: Upload artifact - Python 3.8
+      uses: actions/upload-artifact@v2
+      with:
+        name: python38_output
+        path: python38_output.txt
+        
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+    
+    - name: Check Python version
+      run: python --version
+      id: python39
+    
+    - name: Save output
+      run: echo "${{ steps.python39.outputs.stdout }}" > python39_output.txt
+      
+    - name: Upload artifact - Python 3.9
+      uses: actions/upload-artifact@v2
+      with:
+        name: python39_output
+        path: python39_output.txt
+        
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+    
+    - name: Check Python version
+      run: python --version
+      id: python310
+    
+    - name: Save output
+      run: echo "${{ steps.python310.outputs.stdout }}" > python310_output.txt
+      
+    - name: Upload artifact - Python 3.10
+      uses: actions/upload-artifact@v2
+      with:
+        name: python310_output
+        path: python310_output.txt
