@@ -16,11 +16,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Create output directory
-        run: mkdir output/${{ matrix.python-version }}
+        run: mkdir -p output/${{ matrix.python-version }}
       
       - name: Generate output
         run: |
-          python -c "import sys; print(sys.version)" > output/${{ matrix.python-version }}/output.txt
-      
+          python -c "import sys; print(sys.version)" >> output/${{ matrix.python-version }}/output.txt
 
-      
